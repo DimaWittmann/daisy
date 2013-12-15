@@ -1,18 +1,21 @@
 package daisy.static_architecture.elements;
 
 import daisy.static_architecture.Instruction;
+import daisy.static_architecture.elements.views.FatchingUnitView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author Wittman
  */
-public class FatchingUnit {
+public class FatchingUnit extends AbstractTableModel{
     private Queue<Instruction> queue;
     private MatchingUnit machingUnit;
+    private FatchingUnitView view;
 
     //TODO реалізувати додавання процесорів адекватне
     public List<ProcessorUnit> processors;
@@ -25,23 +28,126 @@ public class FatchingUnit {
     
     //TODO вирішити проблему послідовних клоків у елементах
     public void clock(){
-        List<Instruction> new_inst = machingUnit.getReadyInstructions();
-        queue.addAll(new_inst);
+        
         
         Instruction inst = queue.peek();
         if(inst != null)
-        if(inst.KOP < 0x80){
-            for (ProcessorUnit proc : processors) {
-                if(proc.getState() == ProcessorUnit.State.FREE){
-                    proc.setInstruction(inst);
-                    queue.poll();
-                    return;
-                }
+        for (ProcessorUnit proc : processors) {
+            if(proc.getState() == ProcessorUnit.State.FREE && proc.isSupported(inst.KOP)){
+                proc.setInstruction(inst);
+                queue.poll();
+                this.fireTableDataChanged();
+                getView().setCounter(queue.size());
+                return;
             }
-        }else{
-            //TODO доробити різні оброблюючі елементи
         }
+        List<Instruction> new_inst = machingUnit.getReadyInstructions();
+        queue.addAll(new_inst);
+        this.fireTableDataChanged();
+        getView().setCounter(queue.size());
     }
     
     
+    public FatchingUnitView getView(){
+        if(view == null){
+            view = new FatchingUnitView(this);
+            view.setSize(view.preferredSize());
+        }
+        return view;
+    }
+    
+    
+        @Override
+    public int getRowCount() {
+        return queue.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return 8;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        List<Instruction> l = new ArrayList<>(queue);
+        switch(columnIndex){
+            
+            case 0:
+                return l.get(rowIndex).id;
+            case 1:
+                return l.get(rowIndex).KOP;
+            case 2:
+                return l.get(rowIndex).data[0];
+            case 3:
+                return l.get(rowIndex).dataPresent[0];
+            case 4:
+                return l.get(rowIndex).data[1];
+            case 5:
+                return l.get(rowIndex).dataPresent[1];
+            case 6:
+                return l.get(rowIndex).destination;
+            case 7:
+                return l.get(rowIndex).destPosition;
+        }
+        return null;
+        
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        switch(columnIndex){
+            
+            case 0:
+                return "id";
+            case 1:
+                return "KOP";
+            case 2:
+                return "data1";
+            case 3:
+                return "";
+            case 4:
+                return "data2";
+            case 5:
+                return "";
+            case 6:
+                return "dest";
+            case 7:
+                return "destPos";
+        }
+        return "";
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch(columnIndex){
+            
+            case 0:
+            case 1:
+            case 2:
+            case 4:
+            case 6:
+            case 7:
+                return Integer.class;
+            case 3:
+            case 5:
+                return Boolean.class;
+            
+        }
+        return Object.class;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        
+        //TODO реалізувати
+        return false;
+    }
+
+    
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        
+        //TODO реалізувати
+    }
+
 }

@@ -1,6 +1,7 @@
 package daisy.static_architecture.elements;
 
 import daisy.static_architecture.DataToken;
+import daisy.static_architecture.elements.views.CommutatorView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ public class Commutator{
     //TODO зробити загальний клас з методами додавання вхідних і вихідни конекшенів
     public List<ProcessorUnit> processors;
     public MatchingUnit machingUnit;
+    
+    private CommutatorView view;
 
     public Commutator(MatchingUnit machingUnit) {
         processors = new ArrayList<>();
@@ -29,4 +32,11 @@ public class Commutator{
         }
     }
     
+    public CommutatorView getView(){
+        if(view == null){
+            view = new CommutatorView();
+            view.setSize(view.getPreferredSize());
+        }
+        return view;
+    }
 }

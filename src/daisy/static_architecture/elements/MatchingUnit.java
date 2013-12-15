@@ -5,7 +5,6 @@ import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.views.MatchingUnitView;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 

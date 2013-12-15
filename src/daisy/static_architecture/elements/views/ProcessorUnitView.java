@@ -7,6 +7,7 @@
 package daisy.static_architecture.elements.views;
 
 import daisy.static_architecture.elements.ProcessorUnit;
+import daisy.static_architecture.elements.views.listeners.DragElementListener;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -23,6 +24,9 @@ public class ProcessorUnitView extends javax.swing.JPanel {
      */
     public ProcessorUnitView(ProcessorUnit PU) {
         processorUnit = PU;
+        DragElementListener mouseListener = new DragElementListener();
+        this.addMouseListener(mouseListener);
+        this.addMouseMotionListener(mouseListener);
         initComponents();
     }
 
@@ -30,6 +34,19 @@ public class ProcessorUnitView extends javax.swing.JPanel {
         status.setText(stat);
     }
     
+    public void resetProgress(){
+        progress.setValue(0);
+        
+    }
+    
+    public void setMaximumProgress(int m){
+        progress.setMaximum(m);
+    }
+    
+    public void setProgress(int s){
+        progress.setValue(s);
+    }
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,22 +60,10 @@ public class ProcessorUnitView extends javax.swing.JPanel {
         status = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        progress = new javax.swing.JProgressBar();
 
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        setPreferredSize(new java.awt.Dimension(250, 100));
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                formMouseReleased(evt);
-            }
-        });
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
-            }
-        });
+        setPreferredSize(new java.awt.Dimension(250, 120));
 
         jLabel1.setText("Processor Unit");
 
@@ -80,7 +85,8 @@ public class ProcessorUnitView extends javax.swing.JPanel {
                         .addComponent(status))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -90,32 +96,23 @@ public class ProcessorUnitView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(status))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        getAccessibleContext().setAccessibleName("");
+        getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        if(oldP != null){
-            this.setLocation(this.getX()-(oldP.x-evt.getX()), this.getY() - (oldP.y - evt.getY()));
-        }
-    }//GEN-LAST:event_formMouseDragged
-
-    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        oldP = new Point(evt.getX(), evt.getY());
-    }//GEN-LAST:event_formMousePressed
-
-    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        this.setLocation(this.getX()-(oldP.x-evt.getX()), this.getY() - (oldP.y - evt.getY()));
-        oldP = null;
-    }//GEN-LAST:event_formMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JProgressBar progress;
     private javax.swing.JLabel status;
     // End of variables declaration//GEN-END:variables
 }

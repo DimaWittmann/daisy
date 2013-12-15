@@ -29,6 +29,7 @@ public class Daisy {
         MUV.setSize(MUV.getPreferredSize());
         
         FatchingUnit FU = new FatchingUnit(MU);
+        frame.add(FU.getView());
         
         ProcessorUnit PU1 = new ProcessorUnit();
         
@@ -40,6 +41,7 @@ public class Daisy {
         frame.add(PU2.getView());
         
         Commutator C = new Commutator(MU);
+        frame.add(C.getView());
         
         
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -71,12 +73,12 @@ public class Daisy {
         C.processors.add(PU1);
         C.processors.add(PU2);
         
-        while (true) {            
-            FU.clock();
+        while (true) {  
+            System.in.read();
             C.clock();
             PU1.clock();
             PU2.clock();
-            System.in.read();
+            FU.clock();
         }
         
     }

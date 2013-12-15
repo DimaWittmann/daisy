@@ -7,7 +7,7 @@
 package daisy.static_architecture.elements.views;
 
 import daisy.static_architecture.elements.MatchingUnit;
-import java.awt.Point;
+import daisy.static_architecture.elements.views.listeners.DragElementListener;
 
 /**
  *
@@ -16,12 +16,16 @@ import java.awt.Point;
 public class MatchingUnitView extends javax.swing.JPanel {
 
     private MatchingUnit matchingUnit;
-    private Point oldP;
+    
     /**
      * Creates new form MatchingUnitView
      */
     public MatchingUnitView(MatchingUnit MU) {
         matchingUnit = MU;
+        DragElementListener mouseListener = new DragElementListener();
+        this.addMouseListener(mouseListener);
+        this.addMouseMotionListener(mouseListener);
+        
         initComponents();
     }
 
@@ -34,40 +38,13 @@ public class MatchingUnitView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
+     
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         setPreferredSize(new java.awt.Dimension(250, 200));
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                formMouseReleased(evt);
-            }
-        });
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                formMouseDragged(evt);
-            }
-        });
 
         jLabel1.setText("Matching Unit");
 
@@ -103,21 +80,6 @@ public class MatchingUnitView extends javax.swing.JPanel {
 
         getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        oldP = new Point(evt.getX(), evt.getY());
-    }//GEN-LAST:event_formMousePressed
-
-    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        this.setLocation(this.getX()-(oldP.x-evt.getX()), this.getY() - (oldP.y - evt.getY()));
-        oldP = null;
-    }//GEN-LAST:event_formMouseReleased
-
-    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        if(oldP != null){
-            this.setLocation(this.getX()-(oldP.x-evt.getX()), this.getY() - (oldP.y - evt.getY()));
-        }
-    }//GEN-LAST:event_formMouseDragged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

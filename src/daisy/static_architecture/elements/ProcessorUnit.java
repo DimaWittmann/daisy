@@ -89,6 +89,7 @@ public class ProcessorUnit extends AbstractTableModel{
             setState(State.FREE);
             progress = 0;
             instruction = null;
+            view.resetProgress();
             return culcData;
         }else{
             return null;
@@ -110,11 +111,14 @@ public class ProcessorUnit extends AbstractTableModel{
         switch(state){
             case DATA_ARRAIVED:
                 setState(State.WORKING);
+                view.resetProgress();
+                view.setMaximumProgress(operations.get((int)instruction.KOP).executionTime());
                 break;
                 
             case WORKING:
                 progress++;
                 workingTime++;
+                view.setProgress(progress);
                 //TODO забезпечити безпеку і обробку невідомої інтсрукції
                 if(operations.get((int)instruction.KOP).executionTime() == progress){
                     setCulcData(operations.get((int)instruction.KOP).execute(instruction));
@@ -132,7 +136,14 @@ public class ProcessorUnit extends AbstractTableModel{
         lifeTime++;
     }
     
-    
+    /**
+     * Перевірка, чи дана операція підтримується на процесорі
+     * @param KOP
+     * @return 
+     */
+    public boolean isSupported(int KOP){
+        return operations.containsKey(KOP);
+    }
     
     @Override
     public int getRowCount() {
