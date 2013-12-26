@@ -18,7 +18,6 @@ import java.awt.Point;
 public class ProcessorUnitView extends javax.swing.JPanel {
 
     private ProcessorUnit processorUnit;
-    private Point oldP;
     /**
      * Creates new form ProcessorUnitView
      */

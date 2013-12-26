@@ -6,8 +6,6 @@ import daisy.static_architecture.elements.Commutator;
 import daisy.static_architecture.elements.FatchingUnit;
 import daisy.static_architecture.elements.MatchingUnit;
 import daisy.static_architecture.elements.ProcessorUnit;
-import daisy.static_architecture.elements.views.MatchingUnitView;
-import daisy.static_architecture.elements.views.ProcessorUnitView;
 import java.io.IOException;
 import javax.swing.JFrame;
 
@@ -21,32 +19,34 @@ public class Daisy {
         
         
         MatchingUnit MU = new MatchingUnit(10);
+
+        MU.getView().setLocation(300, 50);
         
-        MatchingUnitView MUV = new MatchingUnitView(MU);
         JFrame frame = new JFrame();
         frame.setLayout(null);
-        frame.add(MUV);
-        MUV.setSize(MUV.getPreferredSize());
+        frame.add(MU.getView());
         
         FatchingUnit FU = new FatchingUnit(MU);
+        FU.getView().setLocation(10, 70);
         frame.add(FU.getView());
         
         ProcessorUnit PU1 = new ProcessorUnit();
-        
-        
         ProcessorUnit PU2 = new ProcessorUnit();
-        ProcessorUnitView PVU2 = new ProcessorUnitView(PU2);
+        
+        PU1.getView().setLocation(300, 260);
+        PU2.getView().setLocation(300, 400);
         
         frame.add(PU1.getView());
         frame.add(PU2.getView());
         
         Commutator C = new Commutator(MU);
+        C.getView().setLocation(600, 50);
         frame.add(C.getView());
         
         
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(600, 600);
+        frame.setSize(900, 600);
         frame.setVisible(true);
                 
         
@@ -75,10 +75,11 @@ public class Daisy {
         
         while (true) {  
             System.in.read();
+            FU.clock();
             C.clock();
             PU1.clock();
             PU2.clock();
-            FU.clock();
+            
         }
         
     }

@@ -18,6 +18,7 @@ public class MatchingUnit extends AbstractTableModel{
     
     public MatchingUnit(int size) {
         instructions = new Instruction[size];
+        initView();
     }
     
     public synchronized void addDataToken(DataToken data){
