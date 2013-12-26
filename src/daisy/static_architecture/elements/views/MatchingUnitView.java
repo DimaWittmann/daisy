@@ -6,7 +6,7 @@
 
 package daisy.static_architecture.elements.views;
 
-import daisy.static_architecture.elements.MatchingUnit;
+import daisy.static_architecture.elements.implementation.StaticMatchingUnit;
 import daisy.static_architecture.elements.views.listeners.DragElementListener;
 
 /**
@@ -15,17 +15,18 @@ import daisy.static_architecture.elements.views.listeners.DragElementListener;
  */
 public class MatchingUnitView extends javax.swing.JPanel {
 
-    private MatchingUnit matchingUnit;
+    private StaticMatchingUnit matchingUnit;
     
     /**
      * Creates new form MatchingUnitView
+     * @param MU
      */
-    public MatchingUnitView(MatchingUnit MU) {
+    public MatchingUnitView(StaticMatchingUnit MU) {
         matchingUnit = MU;
         DragElementListener mouseListener = new DragElementListener();
         this.addMouseListener(mouseListener);
         this.addMouseMotionListener(mouseListener);
-        
+
         initComponents();
     }
 

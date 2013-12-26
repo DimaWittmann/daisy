@@ -6,10 +6,8 @@
 
 package daisy.static_architecture.elements.views;
 
-import daisy.static_architecture.elements.ProcessorUnit;
+import daisy.static_architecture.elements.implementation.StaticProcessorUnit;
 import daisy.static_architecture.elements.views.listeners.DragElementListener;
-import java.awt.Graphics;
-import java.awt.Point;
 
 /**
  *
@@ -17,11 +15,12 @@ import java.awt.Point;
  */
 public class ProcessorUnitView extends javax.swing.JPanel {
 
-    private ProcessorUnit processorUnit;
+    //TODO реалізувати відображення завантаження процесора
+    private StaticProcessorUnit processorUnit;
     /**
      * Creates new form ProcessorUnitView
      */
-    public ProcessorUnitView(ProcessorUnit PU) {
+    public ProcessorUnitView(StaticProcessorUnit PU) {
         processorUnit = PU;
         DragElementListener mouseListener = new DragElementListener();
         this.addMouseListener(mouseListener);

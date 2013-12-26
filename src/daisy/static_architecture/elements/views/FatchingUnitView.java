@@ -6,7 +6,7 @@
 
 package daisy.static_architecture.elements.views;
 
-import daisy.static_architecture.elements.FatchingUnit;
+import daisy.static_architecture.elements.implementation.StaticFatchingUnit;
 import daisy.static_architecture.elements.views.listeners.DragElementListener;
 
 /**
@@ -15,11 +15,11 @@ import daisy.static_architecture.elements.views.listeners.DragElementListener;
  */
 public class FatchingUnitView extends javax.swing.JPanel {
 
-    private FatchingUnit fatchingUnit;
+    private StaticFatchingUnit fatchingUnit;
     /**
      * Creates new form FatchingUnitView
      */
-    public FatchingUnitView(FatchingUnit FU) {
+    public FatchingUnitView(StaticFatchingUnit FU) {
         
         fatchingUnit = FU;
         DragElementListener mouseListener = new DragElementListener();

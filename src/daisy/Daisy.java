@@ -2,10 +2,10 @@ package daisy;
 
 import daisy.static_architecture.DataToken;
 import daisy.static_architecture.Instruction;
-import daisy.static_architecture.elements.Commutator;
-import daisy.static_architecture.elements.FatchingUnit;
-import daisy.static_architecture.elements.MatchingUnit;
-import daisy.static_architecture.elements.ProcessorUnit;
+import daisy.static_architecture.elements.implementation.StaticCommutator;
+import daisy.static_architecture.elements.implementation.StaticFatchingUnit;
+import daisy.static_architecture.elements.implementation.StaticMatchingUnit;
+import daisy.static_architecture.elements.implementation.StaticProcessorUnit;
 import java.io.IOException;
 import javax.swing.JFrame;
 
@@ -18,7 +18,7 @@ public class Daisy {
     public static void main(String [] args) throws IOException{
         
         
-        MatchingUnit MU = new MatchingUnit(10);
+        StaticMatchingUnit MU = new StaticMatchingUnit(10);
 
         MU.getView().setLocation(300, 50);
         
@@ -26,12 +26,12 @@ public class Daisy {
         frame.setLayout(null);
         frame.add(MU.getView());
         
-        FatchingUnit FU = new FatchingUnit(MU);
+        StaticFatchingUnit FU = new StaticFatchingUnit();
         FU.getView().setLocation(10, 70);
         frame.add(FU.getView());
         
-        ProcessorUnit PU1 = new ProcessorUnit();
-        ProcessorUnit PU2 = new ProcessorUnit();
+        StaticProcessorUnit PU1 = new StaticProcessorUnit();
+        StaticProcessorUnit PU2 = new StaticProcessorUnit();
         
         PU1.getView().setLocation(300, 260);
         PU2.getView().setLocation(300, 400);
@@ -39,7 +39,7 @@ public class Daisy {
         frame.add(PU1.getView());
         frame.add(PU2.getView());
         
-        Commutator C = new Commutator(MU);
+        StaticCommutator C = new StaticCommutator();
         C.getView().setLocation(600, 50);
         frame.add(C.getView());
         
@@ -66,17 +66,20 @@ public class Daisy {
         inst[3] = new Instruction(3, 1, 3, 0);
         
         MU.loadProgram(inst);
+       
         
-        FU.processors.add(PU1);
-        FU.processors.add(PU2);
+        FU.attachElement(MU);
+        FU.attachElement(PU1);
+        FU.attachElement(PU2);
         
-        C.processors.add(PU1);
-        C.processors.add(PU2);
+        C.attachElement(MU);
+        C.attachElement(PU1);
+        C.attachElement(PU2);
         
         while (true) {  
             System.in.read();
             FU.clock();
-            C.clock();
+            MU.clock();
             PU1.clock();
             PU2.clock();
             
