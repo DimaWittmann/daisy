@@ -1,4 +1,4 @@
-package daisy.static_architecture.elements.views.listeners;
+package daisy.static_architecture.elements.listeners;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -10,6 +10,7 @@ import javax.swing.JPanel;
  *
  * @author Wittman
  */
+@Deprecated
 public class DragElementListener implements MouseListener, MouseMotionListener{
     private Point oldP;
     

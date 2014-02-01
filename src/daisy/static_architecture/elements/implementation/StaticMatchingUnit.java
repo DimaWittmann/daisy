@@ -4,7 +4,9 @@ import daisy.static_architecture.DataToken;
 import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.MatchingUnit;
+import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.MatchingUnitView;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,22 @@ public class StaticMatchingUnit extends MatchingUnit {
     private StaticFatchingUnit fatchingUnit;
     private StaticCommutator commutator;
 
+    public StaticMatchingUnit() {
+        this(32);
+    }
+
     public StaticMatchingUnit(int size) {
         instructions = new Instruction[size];
+        
+        ElementVertex vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(5, 100));
+        getView().add(vertex.getView());
+        daisy.Daisy.design.addVertex(vertex);
+        
+        vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(240, 100));
+        getView().add(vertex.getView());
+        daisy.Daisy.design.addVertex(vertex);
     }
 
     @Override
@@ -32,6 +48,10 @@ public class StaticMatchingUnit extends MatchingUnit {
 
     @Override
     public void attachElement(Element element) {
+        if(element == this){
+            return;
+        }
+        
         if (element instanceof StaticFatchingUnit) {
             if(element != fatchingUnit){
                 fatchingUnit = (StaticFatchingUnit) element;

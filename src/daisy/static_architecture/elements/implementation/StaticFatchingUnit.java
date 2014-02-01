@@ -3,7 +3,9 @@ package daisy.static_architecture.elements.implementation;
 import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.FatchingUnit;
+import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.FatchingUnitView;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +28,18 @@ public class StaticFatchingUnit extends FatchingUnit {
     public StaticFatchingUnit() {
         queue = new LinkedList<>();
         processors = new ArrayList<>();
+        
+        ElementVertex vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(5, 60));
+        getView().add(vertex.getView());
+        daisy.Daisy.design.addVertex(vertex);
+        
+        vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(245, 60));
+        getView().add(vertex.getView());
+        daisy.Daisy.design.addVertex(vertex);
+        
+        
     }
 
     //TODO вирішити проблему послідовних клоків у елементах
@@ -56,6 +70,10 @@ public class StaticFatchingUnit extends FatchingUnit {
     
     @Override
     public void attachElement(Element element) {
+        if(element == this){
+            return;
+        }
+        
         if (element instanceof StaticMatchingUnit) {
             if(machingUnit != element){
                 machingUnit = (StaticMatchingUnit) element;

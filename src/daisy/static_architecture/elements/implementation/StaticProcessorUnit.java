@@ -4,10 +4,12 @@ import daisy.static_architecture.DataToken;
 import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.ProcessorUnit;
+import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.ProcessorUnitView;
 import daisy.static_architecture.operations.Addition;
 import daisy.static_architecture.operations.IOperation;
 import daisy.static_architecture.operations.Substruction;
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -53,6 +55,16 @@ public class StaticProcessorUnit extends ProcessorUnit {
     public StaticProcessorUnit() {
         state = State.FREE;
         initOperations();
+        
+        ElementVertex vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(5, 60));
+        getView().add(vertex.getView());
+        daisy.Daisy.design.addVertex(vertex);
+        
+        vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(240, 60));
+        getView().add(vertex.getView());
+        daisy.Daisy.design.addVertex(vertex);
     }
 
     @Override
@@ -111,6 +123,11 @@ public class StaticProcessorUnit extends ProcessorUnit {
 
     @Override
     public void attachElement(Element element) {
+        
+        if(element == this){
+            return;
+        }
+        
         if (element instanceof StaticFatchingUnit) {
             if(element != fatchingUnit){
                 fatchingUnit = (StaticFatchingUnit) element;

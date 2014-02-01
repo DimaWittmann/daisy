@@ -3,7 +3,9 @@ package daisy.static_architecture.elements.implementation;
 import daisy.static_architecture.DataToken;
 import daisy.static_architecture.elements.Commutator;
 import daisy.static_architecture.elements.Element;
+import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.CommutatorView;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -21,6 +23,18 @@ public class StaticCommutator extends Commutator{
 
     public StaticCommutator() {
         processors = new ArrayList<>();
+        
+        ElementVertex vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(5, 100));
+        getView().add(vertex.getView());
+        
+        daisy.Daisy.design.addVertex(vertex);
+        
+        vertex = new ElementVertex(this);
+        vertex.getView().setLocation(new Point(65, 100));
+        getView().add(vertex.getView());
+        
+        daisy.Daisy.design.addVertex(vertex);
     }
     
     @Override
@@ -44,6 +58,7 @@ public class StaticCommutator extends Commutator{
     public CommutatorView getView(){
         if(view == null){
             view = new CommutatorView();
+
             view.setSize(view.preferredSize());
         }
         return view;
@@ -52,6 +67,10 @@ public class StaticCommutator extends Commutator{
     
     @Override
     public void attachElement(Element element) {
+        if(element == this){
+            return;
+        }
+        
         if(element instanceof StaticProcessorUnit){
             if(!processors.contains(element)){
                 processors.add((StaticProcessorUnit) element);

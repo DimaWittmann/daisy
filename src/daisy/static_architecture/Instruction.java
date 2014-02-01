@@ -22,15 +22,17 @@ public class Instruction {
     public int destPosition;
 
     public Instruction(int id,int KOP, int destination, int destPosition) {
+        this();
+        
         this.KOP = KOP;
         this.destination = destination;
         this.destPosition = destPosition;
-        
+    }
+
+    public Instruction() {
         dataPresent = new boolean[2];
         data = new int[2];
     }
-    
-    
     public void setData(DataToken data){
         this.dataPresent[data.destPosition] = true;
         this.data[data.destPosition] = data.data;
@@ -55,6 +57,4 @@ public class Instruction {
             dataPresent[i] = false;
         }
     }
-    
-
 }
