@@ -4,9 +4,9 @@ import daisy.static_architecture.GUI.DesignPanel;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.connection.Vertex;
 import daisy.static_architecture.elements.listeners.DesignMouseListener;
+import daisy.static_architecture.elements.views.ElementView;
 import java.awt.BasicStroke;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
@@ -41,6 +41,12 @@ public class Design {
 
     }
     
+    public void removeElement(ElementView element){
+        elements.remove(element.getElement());
+        view.remove(element);
+        view.repaint();
+    }
+    
     public void addVertex(Vertex vertex){
         //TODO implementation
         vertexes.add(vertex);
@@ -49,6 +55,12 @@ public class Design {
         }
         view.repaint();
         daisy.Daisy.frame.pack();
+    }
+    
+    public void removeVertex(Vertex vertex){
+        vertexes.remove(vertex);
+        view.remove(vertex.getView());
+        view.repaint();
     }
     
     public JPanel getView(){
@@ -78,7 +90,7 @@ public class Design {
     private void initView(){
         //TODO implementation
         view = new DesignPanel();
-        view.setPreferredSize(new Dimension(400, 400));
+        view.setPreferredSize(new Dimension(1000, 800));
         
         view.addMouseListener(designListener);
         view.addMouseMotionListener(designListener);

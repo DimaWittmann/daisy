@@ -7,26 +7,27 @@
 package daisy.static_architecture.elements.views;
 
 
+import daisy.static_architecture.elements.Commutator;
+import daisy.static_architecture.elements.actions.DeleteElementAction;
 import daisy.static_architecture.elements.listeners.DesignMouseListener;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.geom.Path2D;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
  * @author Wittman
  */
-public class CommutatorView extends ElementView{
-
+public class CommutatorView extends ElementView implements ActionElement{
     /**
      * Creates new form CommutatorView
      */
-    public CommutatorView() {
-        DesignMouseListener mouseListener = new DesignMouseListener();
-        this.addMouseListener(mouseListener);
-        this.addMouseMotionListener(mouseListener);
+    public CommutatorView(Commutator commutator) {
+        super(commutator);
         setLayout(null);
         initComponents();
     }
@@ -73,4 +74,6 @@ public class CommutatorView extends ElementView{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    
 }

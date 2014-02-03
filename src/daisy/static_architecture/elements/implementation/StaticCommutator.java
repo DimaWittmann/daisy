@@ -57,8 +57,7 @@ public class StaticCommutator extends Commutator{
     @Override
     public CommutatorView getView(){
         if(view == null){
-            view = new CommutatorView();
-
+            view = new CommutatorView(this);
             view.setSize(view.preferredSize());
         }
         return view;

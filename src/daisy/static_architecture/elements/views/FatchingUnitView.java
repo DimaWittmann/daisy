@@ -6,7 +6,7 @@
 
 package daisy.static_architecture.elements.views;
 
-import daisy.static_architecture.elements.implementation.StaticFatchingUnit;
+import daisy.static_architecture.elements.FatchingUnit;
 
 /**
  *
@@ -14,12 +14,13 @@ import daisy.static_architecture.elements.implementation.StaticFatchingUnit;
  */
 public class FatchingUnitView extends ElementView {
 
-    private StaticFatchingUnit fatchingUnit;
+    private FatchingUnit fatchingUnit;
     /**
      * Creates new form FatchingUnitView
+     * @param FU
      */
-    public FatchingUnitView(StaticFatchingUnit FU) {
-        
+    public FatchingUnitView(FatchingUnit FU) {
+        super(FU);
         fatchingUnit = FU;
         initComponents();
     }

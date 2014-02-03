@@ -1,22 +1,28 @@
 package daisy.static_architecture.elements.views;
+import daisy.static_architecture.elements.actions.DeleteVertexAction;
 import daisy.static_architecture.elements.connection.Vertex;
 import daisy.static_architecture.elements.listeners.DesignMouseListener;
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 
 /**
  *
  * @author Wittman
  */
-public class VertexView extends JPanel{
+public class VertexView extends JPanel implements ActionElement{
 
     private boolean selected;
     
     private Color color;
     
     public Vertex model;
+    
+    protected JPopupMenu popupMenu;
+    
     
     public VertexView(Vertex model ) {   
         setSize(6, 6);
@@ -64,4 +70,15 @@ public class VertexView extends JPanel{
         
     }
 
+    @Override
+    public JPopupMenu getPopupMenu() {
+        if(popupMenu == null){
+            popupMenu = new JPopupMenu();
+            JMenuItem menuItem = new JMenuItem("Delete");
+            menuItem.addActionListener(new DeleteVertexAction(model));
+            popupMenu.add(menuItem);
+        }
+        
+        return popupMenu;
+    }
 }

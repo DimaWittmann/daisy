@@ -8,8 +8,10 @@ import daisy.static_architecture.elements.connection.Vertex;
  */
 public class ElementVertexView extends VertexView{
 
+    
     public ElementVertexView(Vertex model) {
         super(model);
     }
+
 
 }

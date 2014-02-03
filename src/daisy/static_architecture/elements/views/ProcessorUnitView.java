@@ -6,8 +6,7 @@
 
 package daisy.static_architecture.elements.views;
 
-import daisy.static_architecture.elements.implementation.StaticProcessorUnit;
-import daisy.static_architecture.elements.listeners.DragElementListener;
+import daisy.static_architecture.elements.ProcessorUnit;
 
 /**
  *
@@ -16,12 +15,13 @@ import daisy.static_architecture.elements.listeners.DragElementListener;
 public class ProcessorUnitView extends ElementView {
 
     //TODO реалізувати відображення завантаження процесора
-    private StaticProcessorUnit processorUnit;
+    private ProcessorUnit processorUnit;
     /**
      * Creates new form ProcessorUnitView
+     * @param PU
      */
-    public ProcessorUnitView(StaticProcessorUnit PU) {
-        super();
+    public ProcessorUnitView(ProcessorUnit PU) {
+        super(PU);
         processorUnit = PU;
         initComponents();
     }
