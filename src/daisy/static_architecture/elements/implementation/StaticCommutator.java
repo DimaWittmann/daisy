@@ -24,17 +24,7 @@ public class StaticCommutator extends Commutator{
     public StaticCommutator() {
         processors = new ArrayList<>();
         
-        ElementVertex vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(5, 100));
-        getView().add(vertex.getView());
-        
-        daisy.Daisy.design.addVertex(vertex);
-        
-        vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(65, 100));
-        getView().add(vertex.getView());
-        
-        daisy.Daisy.design.addVertex(vertex);
+
     }
     
     @Override
@@ -59,6 +49,18 @@ public class StaticCommutator extends Commutator{
         if(view == null){
             view = new CommutatorView(this);
             view.setSize(view.preferredSize());
+            
+            ElementVertex vertex = new ElementVertex(this);
+            vertex.getView().setLocation(new Point(5, 100));
+            view.add(vertex.getView());
+
+            daisy.Daisy.design.addVertex(vertex);
+
+            vertex = new ElementVertex(this);
+            vertex.getView().setLocation(new Point(65, 100));
+            view.add(vertex.getView());
+
+            daisy.Daisy.design.addVertex(vertex);
         }
         return view;
     }
@@ -119,6 +121,12 @@ public class StaticCommutator extends Commutator{
     @Deprecated
     public Object getValueAt(int rowIndex, int columnIndex) {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public void detachAllElements() {
+        processors.clear();
+        machingUnit = null;
     }
 
 

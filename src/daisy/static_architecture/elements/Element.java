@@ -30,4 +30,6 @@ public abstract class Element extends AbstractTableModel{
      * @param element під'єднаний елемент
      */
     public abstract void detachElement(Element element);
+    
+    public abstract void detachAllElements();
 }

@@ -1,18 +1,22 @@
 package daisy.static_architecture.GUI;
 
+import daisy.static_architecture.elements.views.ActionElement;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.util.ArrayList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 /**
  *
  * @author Wittman
  */
 
-public class DesignPanel extends JPanel{
+public class DesignPanel extends JPanel implements ActionElement{
 
+    private JPopupMenu popupMenu;
     public ArrayList<Shape> connections;
 
     public DesignPanel() {
@@ -28,6 +32,15 @@ public class DesignPanel extends JPanel{
             g2d.fill(shape);
         }
         
+    }
+
+    @Override
+    public JPopupMenu getPopupMenu() {
+        if(popupMenu == null){
+            popupMenu = new JPopupMenu();
+            popupMenu.add(new JMenuItem("Hello"));
+        }
+        return popupMenu;
     }
     
     

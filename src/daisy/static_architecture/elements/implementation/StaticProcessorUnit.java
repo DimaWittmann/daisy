@@ -297,6 +297,12 @@ public class StaticProcessorUnit extends ProcessorUnit {
         //TODO реалізувати
     }
 
+    @Override
+    public void detachAllElements() {
+        commutator = null;
+        fatchingUnit = null;
+    }
+    
     public enum State {
 
         FREE, DATA_ARRAIVED, WORKING, DONE;

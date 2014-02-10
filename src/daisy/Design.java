@@ -87,6 +87,11 @@ public class Design {
         view.repaint();
 
     }
+    
+    public void commectAllElements(){
+        
+    }
+    
     private void initView(){
         //TODO implementation
         view = new DesignPanel();

@@ -218,4 +218,11 @@ public class StaticMatchingUnit extends MatchingUnit {
         instructions[data.destination].setData(data);
         this.fireTableDataChanged();
     }
+    
+    @Override
+    public void detachAllElements() {
+        fatchingUnit = null;
+        commutator = null;
+    }
+
 }

@@ -69,6 +69,22 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
                 break;
             case 0x11:  //left mouse button + shift
                 //TODO implement or not implement
+                if(selected != null){
+                    vertex = new Vertex();
+                    vertex.getView().setLocation(e.getPoint());
+                    
+                    daisy.Daisy.design.addVertex(vertex);
+                    
+                    selected.model.addNextVertex(vertex);
+                    vertex.setPredVertex(selected.model);
+                    
+                    selected.unselect();
+                    selected = (VertexView) vertex.getView();
+                    selected.seleсt();
+                    
+                    daisy.Daisy.design.repaintDesign();
+                }
+                
                 break;
             }
             
@@ -87,7 +103,7 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
                 vertex.seleсt();
                 break;
                 
-            case 0x4: //right mouse button
+            case 0x11:  //left mouse button + shift
                 if(selected != null){
                     vertex = (VertexView)e.getSource();
                     selected.model.addNextVertex(vertex.model);
@@ -119,7 +135,7 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+        System.out.println(e.getModifiers()+" ");
         if(e.getSource() instanceof ActionElement){
             ActionElement element = (ActionElement) e.getSource();
             switch(e.getModifiers()){

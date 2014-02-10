@@ -8,15 +8,13 @@ package daisy.static_architecture.elements.views;
 
 
 import daisy.static_architecture.elements.Commutator;
-import daisy.static_architecture.elements.actions.DeleteElementAction;
-import daisy.static_architecture.elements.listeners.DesignMouseListener;
+import daisy.static_architecture.elements.connection.ElementVertex;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.Path2D;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 /**
  *
@@ -25,11 +23,27 @@ import javax.swing.JPopupMenu;
 public class CommutatorView extends ElementView implements ActionElement{
     /**
      * Creates new form CommutatorView
+     * @param commutator
      */
     public CommutatorView(Commutator commutator) {
         super(commutator);
         setLayout(null);
         initComponents();
+    }
+    
+    
+    private void initElementVertexes(){
+        ElementVertex vertex = new ElementVertex(this.element);
+        vertex.getView().setLocation(new Point(5, 100));
+        this.add(vertex.getView());
+
+        daisy.Daisy.design.addVertex(vertex);
+
+        vertex = new ElementVertex(this.element);
+        vertex.getView().setLocation(new Point(65, 100));
+        this.add(vertex.getView());
+
+        daisy.Daisy.design.addVertex(vertex);
     }
 
     @Override

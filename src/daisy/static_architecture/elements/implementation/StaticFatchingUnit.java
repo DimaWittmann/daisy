@@ -208,4 +208,10 @@ public class StaticFatchingUnit extends FatchingUnit {
         //TODO реалізувати
     }
 
+    @Override
+    public void detachAllElements() {
+        processors.clear();
+        machingUnit = null;
+    }
+
 }
