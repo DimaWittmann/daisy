@@ -20,6 +20,7 @@ import javax.swing.JPanel;
  *
  * @author Wittman
  */
+@Deprecated
 public class ElementsPanel extends JPanel {
 
     private ElementsModel model;
@@ -46,7 +47,7 @@ public class ElementsPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        daisy.Daisy.design.addElement(model.getNewElementInstance(((JButton)e.getSource()).getName()));
+                        daisy.Daisy.getDesign().addElement(model.getNewElementInstance(((JButton)e.getSource()).getName()));
                     } catch (InstantiationException | IllegalAccessException ex) {
                         Logger.getLogger(ElementsPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }

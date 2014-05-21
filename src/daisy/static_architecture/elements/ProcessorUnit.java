@@ -7,7 +7,7 @@ import daisy.static_architecture.Instruction;
  *
  * @author Wittman
  */
-public abstract class ProcessorUnit extends Element{
+public abstract class ProcessorUnit extends Element implements ITokenOutput{
 
     
     public abstract void setInstruction(Instruction instruction);

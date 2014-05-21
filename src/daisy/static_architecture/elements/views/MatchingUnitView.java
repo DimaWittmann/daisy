@@ -7,7 +7,12 @@
 package daisy.static_architecture.elements.views;
 
 import daisy.static_architecture.elements.MatchingUnit;
+import daisy.static_architecture.elements.actions.AddInputAction;
+import daisy.static_architecture.elements.actions.AddInstructionAction;
 import daisy.static_architecture.elements.implementation.StaticMatchingUnit;
+import java.awt.Point;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -15,18 +20,41 @@ import daisy.static_architecture.elements.implementation.StaticMatchingUnit;
  */
 public class MatchingUnitView extends ElementView{
 
-    private MatchingUnit matchingUnit;
+    private StaticMatchingUnit matchingUnit;
     
     /**
      * Creates new form MatchingUnitView
      * @param MU
      */
-    public MatchingUnitView(MatchingUnit MU) {
+    public MatchingUnitView(StaticMatchingUnit MU) {
         super(MU);
-        matchingUnit = MU;
+        matchingUnit = MU; 
+        initElementVertexes();
         initComponents();
-        
+        this.setSize(this.preferredSize());
     }
+    
+    
+    
+    @Override
+    protected void initElementVertexes() {
+        addPin(new Point(5, 100));
+        addPin(new Point(240, 100));
+    }
+    
+    
+    @Override
+    public JPopupMenu getPopupMenu() {
+        if(popupMenu == null){
+            popupMenu = super.getPopupMenu();
+            
+            JMenuItem menuItem = new JMenuItem("Add token");
+            menuItem.addActionListener(new AddInstructionAction(matchingUnit));
+            popupMenu.add(menuItem);
+        }
+        return popupMenu;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

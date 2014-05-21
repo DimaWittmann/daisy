@@ -33,11 +33,13 @@ public class Design {
 
     
     public void addElement(Element element){
-        //TODO implementation
+        daisy.Daisy.mainFrame.setPreferredSize(daisy.Daisy.mainFrame.getSize());  //resize problem when added new element
+        
         elements.add(element);
         view.add(element.getView());
         view.repaint();
-        daisy.Daisy.frame.pack(); //if do not call new pannel do not repaint childern
+        
+        daisy.Daisy.mainFrame.pack(); //if do not call new pannel do not repaint childern
 
     }
     
@@ -54,7 +56,7 @@ public class Design {
             view.add(vertex.getView());
         }
         view.repaint();
-        daisy.Daisy.frame.pack();
+        //daisy.Daisy.mainFrame.pack();
     }
     
     public void removeVertex(Vertex vertex){
@@ -75,9 +77,9 @@ public class Design {
         view.connections.clear();
         
         for (Vertex vertex : vertexes) {
-            if(vertex.precending != null){
+            if(vertex.next != null){
                 Path2D path = new Path2D.Double();
-                Point from = vertex.precending.getPosition();
+                Point from = vertex.next.getPosition();
                 Point to = vertex.getPosition();
                 path.moveTo(from.getX()+3, from.getY()+3);
                 path.lineTo(to.getX()+3, to.getY()+3);
@@ -94,7 +96,7 @@ public class Design {
     
     private void initView(){
         //TODO implementation
-        view = new DesignPanel();
+        view = new DesignPanel(this);
         view.setPreferredSize(new Dimension(1000, 800));
         
         view.addMouseListener(designListener);

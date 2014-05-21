@@ -1,7 +1,6 @@
 package daisy.static_architecture.elements.connection;
 
 import daisy.static_architecture.elements.Element;
-import daisy.static_architecture.elements.views.ElementVertexView;
 import daisy.static_architecture.elements.views.VertexView;
 import java.awt.Point;
 import javax.swing.JPanel;
@@ -31,7 +30,7 @@ public class ElementVertex extends Vertex{
     @Override
     public JPanel getView(){
         if(view == null){
-            view = new ElementVertexView(this);
+            view = new VertexView(this);
         }
         return view;
     }

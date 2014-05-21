@@ -24,6 +24,7 @@ public class Instruction {
     public Instruction(int id,int KOP, int destination, int destPosition) {
         this();
         
+        this.id = id;
         this.KOP = KOP;
         this.destination = destination;
         this.destPosition = destPosition;

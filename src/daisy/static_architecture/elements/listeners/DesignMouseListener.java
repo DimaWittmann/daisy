@@ -1,7 +1,5 @@
 package daisy.static_architecture.elements.listeners;
 
-import daisy.Design;
-import daisy.static_architecture.GUI.DesignPanel;
 import daisy.static_architecture.elements.connection.Vertex;
 import daisy.static_architecture.elements.views.ActionElement;
 import daisy.static_architecture.elements.views.ElementView;
@@ -31,7 +29,7 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
             case 0x10: //left mouse button
                 JPanel panel = ((JPanel) e.getSource());
                 panel.setLocation(panel.getX()-(oldP.x-e.getX()), panel.getY() - (oldP.y - e.getY()));
-                daisy.Daisy.design.repaintDesign();
+                daisy.Daisy.getDesign().repaintDesign();
                 break;
             }
         }
@@ -46,7 +44,7 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        if(e.getSource() == daisy.Daisy.design.getView() ){
+        if(e.getSource() == daisy.Daisy.getDesign().getView() ){
             
             switch(e.getModifiers()){
 
@@ -54,7 +52,7 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
                 Vertex vertex = new Vertex();
                 vertex.getView().setLocation(e.getPoint());
                 
-                daisy.Daisy.design.addVertex(vertex);
+                daisy.Daisy.getDesign().addVertex(vertex);
                 break;
             case 0x4: //right mouse button
                 if(selected != null){
@@ -73,16 +71,16 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
                     vertex = new Vertex();
                     vertex.getView().setLocation(e.getPoint());
                     
-                    daisy.Daisy.design.addVertex(vertex);
+                    daisy.Daisy.getDesign().addVertex(vertex);
                     
-                    selected.model.addNextVertex(vertex);
+                    selected.model.setNextVertex(vertex);
                     vertex.setPredVertex(selected.model);
                     
                     selected.unselect();
                     selected = (VertexView) vertex.getView();
                     selected.seleсt();
                     
-                    daisy.Daisy.design.repaintDesign();
+                    daisy.Daisy.getDesign().repaintDesign();
                 }
                 
                 break;
@@ -106,9 +104,9 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
             case 0x11:  //left mouse button + shift
                 if(selected != null){
                     vertex = (VertexView)e.getSource();
-                    selected.model.addNextVertex(vertex.model);
+                    selected.model.setNextVertex(vertex.model);
                     vertex.model.setPredVertex(selected.model);
-                    daisy.Daisy.design.repaintDesign();
+                    daisy.Daisy.getDesign().repaintDesign();
                 }
                 break;
             }
@@ -135,7 +133,7 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        System.out.println(e.getModifiers()+" ");
+//        System.out.println(e.getModifiers()+" ");
         if(e.getSource() instanceof ActionElement){
             ActionElement element = (ActionElement) e.getSource();
             switch(e.getModifiers()){
@@ -155,19 +153,19 @@ public class DesignMouseListener implements MouseListener, MouseMotionListener{
 
                 int x = panel.getX()-(oldP.x-e.getX());
                 int y = panel.getY() - (oldP.y - e.getY());
-
-                try {
-                    int line = 2;
-                    double d = (line*2) % x;
-                    x = (int) ((d > line)? x+line-d:x-d);
-                    d = (line*2) % y;
-                    y = (int) ((d > line)? y+line-d:y-d);
-
-                } catch (ArithmeticException ex) {
-                }
+//
+//                try {
+//                    int line = 2;
+//                    double d = (line*2) % x;
+//                    x = (int) ((d > line)? x+line-d:x-d);
+//                    d = (line*2) % y;
+//                    y = (int) ((d > line)? y+line-d:y-d);
+//
+//                } catch (ArithmeticException ex) {
+//                }
 
                 panel.setLocation(x , y);
-                daisy.Daisy.design.repaintDesign();
+                daisy.Daisy.getDesign().repaintDesign();
                 break;
             }
         }

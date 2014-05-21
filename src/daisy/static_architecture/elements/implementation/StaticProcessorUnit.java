@@ -4,15 +4,12 @@ import daisy.static_architecture.DataToken;
 import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.ProcessorUnit;
-import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.ProcessorUnitView;
 import daisy.static_architecture.operations.Addition;
 import daisy.static_architecture.operations.IOperation;
 import daisy.static_architecture.operations.Substruction;
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
@@ -49,22 +46,11 @@ public class StaticProcessorUnit extends ProcessorUnit {
     //TODO реалізувати динамічне підвантаження операцій
     //TODO реалізувати отримання підтримуваних операцій
     private Map<Integer, IOperation> operations;
-    private StaticFatchingUnit fatchingUnit;
-    private StaticCommutator commutator;
+    private StaticPUtoMCommutator commutator;
 
     public StaticProcessorUnit() {
         state = State.FREE;
         initOperations();
-        
-        ElementVertex vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(5, 60));
-        getView().add(vertex.getView());
-        daisy.Daisy.design.addVertex(vertex);
-        
-        vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(240, 60));
-        getView().add(vertex.getView());
-        daisy.Daisy.design.addVertex(vertex);
     }
 
     @Override
@@ -93,7 +79,6 @@ public class StaticProcessorUnit extends ProcessorUnit {
     public ProcessorUnitView getView() {
         if (view == null) {
             view = new ProcessorUnitView(this);
-            view.setSize(view.preferredSize());
         }
         return view;
     }
@@ -128,16 +113,10 @@ public class StaticProcessorUnit extends ProcessorUnit {
             return;
         }
         
-        if (element instanceof StaticFatchingUnit) {
-            if(element != fatchingUnit){
-                fatchingUnit = (StaticFatchingUnit) element;
-                element.attachElement(this);
-            }
-        }
 
-        if (element instanceof StaticCommutator) {
+        if (element instanceof StaticPUtoMCommutator) {
             if(element != commutator){
-                commutator = (StaticCommutator) element;
+                commutator = (StaticPUtoMCommutator) element;
                 element.attachElement(this);
             }
         }
@@ -145,14 +124,6 @@ public class StaticProcessorUnit extends ProcessorUnit {
 
     @Override
     public void detachElement(Element element) {
-        if (element instanceof StaticFatchingUnit) {
-            if(fatchingUnit != null){
-                fatchingUnit.detachElement(this);
-                fatchingUnit = null;
-            }
-            
-        }
-
         if (element instanceof StaticProcessorUnit) {
             if( commutator != null){
                 commutator.detachElement(this);
@@ -160,6 +131,13 @@ public class StaticProcessorUnit extends ProcessorUnit {
             }
             
         }
+    }
+    
+    
+    @Override
+    public DataToken getReadyData() {
+        //TODO implement
+        return null;
     }
 
 
@@ -210,7 +188,7 @@ public class StaticProcessorUnit extends ProcessorUnit {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 6;
     }
 
     @Override
@@ -225,14 +203,10 @@ public class StaticProcessorUnit extends ProcessorUnit {
                 case 2:
                     return instruction.data[0];
                 case 3:
-                    return instruction.dataPresent[0];
-                case 4:
                     return instruction.data[1];
-                case 5:
-                    return instruction.dataPresent[1];
-                case 6:
+                case 4:
                     return instruction.destination;
-                case 7:
+                case 5:
                     return instruction.destPosition;
             }
         }
@@ -252,14 +226,10 @@ public class StaticProcessorUnit extends ProcessorUnit {
             case 2:
                 return "data1";
             case 3:
-                return "";
-            case 4:
                 return "data2";
-            case 5:
-                return "";
-            case 6:
+            case 4:
                 return "dest";
-            case 7:
+            case 5:
                 return "destPos";
         }
         return "";
@@ -267,21 +237,7 @@ public class StaticProcessorUnit extends ProcessorUnit {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-
-            case 0:
-            case 1:
-            case 2:
-            case 4:
-            case 6:
-            case 7:
-                return int.class;
-            case 3:
-            case 5:
-                return Boolean.class;
-
-        }
-        return Object.class;
+        return int.class;
     }
 
     @Override
@@ -300,7 +256,6 @@ public class StaticProcessorUnit extends ProcessorUnit {
     @Override
     public void detachAllElements() {
         commutator = null;
-        fatchingUnit = null;
     }
     
     public enum State {

@@ -2,7 +2,9 @@ package daisy.static_architecture.elements.views;
 
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.actions.DeleteElementAction;
+import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.listeners.DesignMouseListener;
+import java.awt.Point;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -25,6 +27,14 @@ public abstract class ElementView extends JPanel implements ActionElement{
     }
 
     
+    public void addPin(Point point){
+        ElementVertex vertex = new ElementVertex(this.element);
+        vertex.getView().setLocation(point);
+        this.add(vertex.getView());
+
+        daisy.Daisy.getDesign().addVertex(vertex);
+    }
+    
     protected abstract void initComponents();
     
     public Element getElement(){
@@ -42,5 +52,7 @@ public abstract class ElementView extends JPanel implements ActionElement{
         
         return popupMenu;
     }
+    
+    protected abstract void initElementVertexes();
 
 }

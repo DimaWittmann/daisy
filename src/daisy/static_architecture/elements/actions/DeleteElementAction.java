@@ -18,8 +18,8 @@ public class DeleteElementAction implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        daisy.Daisy.design.removeElement(source);
-        daisy.Daisy.design.repaintDesign();
+        daisy.Daisy.getDesign().removeElement(source);
+        daisy.Daisy.getDesign().repaintDesign();
     }
 
 }

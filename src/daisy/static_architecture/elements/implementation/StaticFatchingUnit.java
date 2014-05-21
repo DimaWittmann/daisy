@@ -1,11 +1,10 @@
 package daisy.static_architecture.elements.implementation;
 
+import daisy.static_architecture.DataToken;
 import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.FatchingUnit;
-import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.FatchingUnitView;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,18 +26,6 @@ public class StaticFatchingUnit extends FatchingUnit {
     public StaticFatchingUnit() {
         queue = new LinkedList<>();
         processors = new ArrayList<>();
-        
-        ElementVertex vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(5, 60));
-        getView().add(vertex.getView());
-        daisy.Daisy.design.addVertex(vertex);
-        
-        vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(245, 60));
-        getView().add(vertex.getView());
-        daisy.Daisy.design.addVertex(vertex);
-        
-        
     }
 
     //TODO вирішити проблему послідовних клоків у елементах
@@ -76,14 +63,14 @@ public class StaticFatchingUnit extends FatchingUnit {
         if (element instanceof StaticMatchingUnit) {
             if(machingUnit != element){
                 machingUnit = (StaticMatchingUnit) element;
-                element.attachElement(this);
+                (((StaticMatchingUnit) element)).attachElement(this);
             }
         }
 
         if (element instanceof StaticProcessorUnit) {
-            if(!processors.contains(element)){
+            if(!processors.contains((StaticProcessorUnit)element)){
                 processors.add((StaticProcessorUnit) element);
-                element.detachElement(this);
+                element.attachElement(this);
             }
         }
     }
@@ -111,7 +98,6 @@ public class StaticFatchingUnit extends FatchingUnit {
     public FatchingUnitView getView() {
         if (view == null) {
             view = new FatchingUnitView(this);
-            view.setSize(view.preferredSize());
         }
         return view;
     }

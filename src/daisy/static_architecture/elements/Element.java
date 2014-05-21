@@ -32,4 +32,7 @@ public abstract class Element extends AbstractTableModel{
     public abstract void detachElement(Element element);
     
     public abstract void detachAllElements();
+    
+    
+    
 }

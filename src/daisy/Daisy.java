@@ -1,17 +1,15 @@
 package daisy;
 
+import daisy.static_architecture.GUI.MainFrame;
 import daisy.static_architecture.DataToken;
-import daisy.static_architecture.GUI.ElementsPanel;
 import daisy.static_architecture.Instruction;
-import daisy.static_architecture.elements.ElementsModel;
-import daisy.static_architecture.elements.implementation.StaticCommutator;
+import daisy.static_architecture.elements.implementation.StaticPUtoMCommutator;
 import daisy.static_architecture.elements.implementation.StaticFatchingUnit;
 import daisy.static_architecture.elements.implementation.StaticMatchingUnit;
 import daisy.static_architecture.elements.implementation.StaticProcessorUnit;
-import java.awt.BorderLayout;
 import java.io.IOException;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 /**
  *
@@ -19,33 +17,31 @@ import javax.swing.JPanel;
  */
 public class Daisy {
     
-    public static Design design;
-    public static JFrame frame;
-    public static ElementsPanel buttons;
-
+    public static MainFrame mainFrame;
+    
+    
     public Daisy() {
-        
-        design = new Design();
-        buttons = new ElementsPanel(new ElementsModel());
-        
-        JPanel mainPanel= new JPanel(new BorderLayout());
+        mainFrame = new MainFrame();
 
-        mainPanel.add(design.getView(), BorderLayout.CENTER);
-        mainPanel.add(buttons, BorderLayout.WEST);
+        try {
+            javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
    
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(mainPanel);
-        frame.pack();
-        frame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
         
     }
     
-    
+    public static Design getDesign(){
+        return mainFrame.getCurrentTab();
+    }
     
     public static void main(String [] args) throws IOException{
         Daisy d = new Daisy();
-        
+        d.mainFrame.createNewTab();
         StaticMatchingUnit MU = new StaticMatchingUnit(10);
         MU.getView().setLocation(300, 50);
         
@@ -58,7 +54,7 @@ public class Daisy {
         PU1.getView().setLocation(300, 260);
         PU2.getView().setLocation(300, 400);
         
-        StaticCommutator C = new StaticCommutator();
+        StaticPUtoMCommutator C = new StaticPUtoMCommutator();
         C.getView().setLocation(600, 50);
         
                 
@@ -84,15 +80,15 @@ public class Daisy {
         FU.attachElement(PU1);
         FU.attachElement(PU2);
         
-        C.attachElement(MU);
-        C.attachElement(PU1);
-        C.attachElement(PU2);
+        //C.attachElement(MU);
+        //C.attachElement(PU1);
+        //C.attachElement(PU2);
         
-        Daisy.design.addElement(MU);
-        Daisy.design.addElement(PU1);
-        Daisy.design.addElement(PU2);
-        Daisy.design.addElement(FU);
-        Daisy.design.addElement(C);
+        Daisy.getDesign().addElement(MU);
+        Daisy.getDesign().addElement(PU1);
+        Daisy.getDesign().addElement(PU2);
+        Daisy.getDesign().addElement(FU);
+        Daisy.getDesign().addElement(C);
         
         while (true) {  
             System.in.read();

@@ -1,11 +1,9 @@
 package daisy.static_architecture.elements.implementation;
 
 import daisy.static_architecture.DataToken;
-import daisy.static_architecture.elements.Commutator;
 import daisy.static_architecture.elements.Element;
-import daisy.static_architecture.elements.connection.ElementVertex;
+import daisy.static_architecture.elements.ITokenOutput;
 import daisy.static_architecture.elements.views.CommutatorView;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -14,20 +12,18 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  *
  * @author Wittman
  */
-public class StaticCommutator extends Commutator{
+public class StaticPUtoMCommutator extends Element implements ITokenOutput{
 
     private List<StaticProcessorUnit> processors;
     private StaticMatchingUnit machingUnit;
     
     private CommutatorView view;
 
-    public StaticCommutator() {
+    public StaticPUtoMCommutator() {
         processors = new ArrayList<>();
-        
-
     }
     
-    @Override
+
     public DataToken getReadyData() {
         for (StaticProcessorUnit processor : processors) {
             if(processor.getState() == StaticProcessorUnit.State.DONE){
@@ -48,19 +44,6 @@ public class StaticCommutator extends Commutator{
     public CommutatorView getView(){
         if(view == null){
             view = new CommutatorView(this);
-            view.setSize(view.preferredSize());
-            
-            ElementVertex vertex = new ElementVertex(this);
-            vertex.getView().setLocation(new Point(5, 100));
-            view.add(vertex.getView());
-
-            daisy.Daisy.design.addVertex(vertex);
-
-            vertex = new ElementVertex(this);
-            vertex.getView().setLocation(new Point(65, 100));
-            view.add(vertex.getView());
-
-            daisy.Daisy.design.addVertex(vertex);
         }
         return view;
     }

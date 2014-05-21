@@ -1,5 +1,6 @@
 package daisy.static_architecture.GUI;
 
+import daisy.Design;
 import daisy.static_architecture.elements.views.ActionElement;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,9 +19,11 @@ public class DesignPanel extends JPanel implements ActionElement{
 
     private JPopupMenu popupMenu;
     public ArrayList<Shape> connections;
+    public Design design;
 
-    public DesignPanel() {
+    public DesignPanel(Design design) {
         this.connections = new ArrayList();
+        this.design = design;
         setLayout(null);
     }
 
