@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package daisy.static_architecture.elements.views;
 
 import daisy.static_architecture.elements.FatchingUnit;
+import java.awt.Point;
 
 /**
  *
@@ -22,11 +17,19 @@ public class FatchingUnitView extends ElementView {
     public FatchingUnitView(FatchingUnit FU) {
         super(FU);
         fatchingUnit = FU;
+        initElementVertexes();
         initComponents();
+        this.setSize(this.preferredSize());
     }
 
     public void setCounter(int n){
         counter.setValue(n);
+    }
+    
+    @Override
+    protected void initElementVertexes() {
+        addPin(new Point(5, 60));
+        addPin(new Point(240, 60));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,4 +90,6 @@ public class FatchingUnitView extends ElementView {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
+
+    
 }

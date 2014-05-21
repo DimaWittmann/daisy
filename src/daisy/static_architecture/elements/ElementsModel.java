@@ -1,17 +1,17 @@
 package daisy.static_architecture.elements;
 
-import daisy.static_architecture.elements.implementation.StaticCommutator;
+import daisy.static_architecture.elements.implementation.StaticPUtoMCommutator;
 import daisy.static_architecture.elements.implementation.StaticFatchingUnit;
 import daisy.static_architecture.elements.implementation.StaticMatchingUnit;
 import daisy.static_architecture.elements.implementation.StaticProcessorUnit;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.AbstractListModel;
 
 /**
  *
  * @author Wittman
  */
+@Deprecated
 public class ElementsModel {
 
     private List<Class<?extends Element>> elements;
@@ -49,7 +49,7 @@ public class ElementsModel {
         elementsName.add("Matching Unit");
         elementsName.add("Processor Unit");
         
-        elements.add(StaticCommutator.class);
+        elements.add(StaticPUtoMCommutator.class);
         elements.add(StaticFatchingUnit.class);
         elements.add(StaticMatchingUnit.class);
         elements.add(StaticProcessorUnit.class);

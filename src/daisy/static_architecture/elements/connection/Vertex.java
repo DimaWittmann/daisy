@@ -4,7 +4,6 @@ package daisy.static_architecture.elements.connection;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.views.VertexView;
 import java.awt.Point;
-import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -16,12 +15,11 @@ public class Vertex {
     
 
     public Vertex precending;
-    protected ArrayList<Vertex> next;
+    public Vertex next;
     
     protected VertexView view;
 
     public Vertex(Vertex precending) {
-        next = new ArrayList();
         this.precending = precending;
     }
 
@@ -29,8 +27,8 @@ public class Vertex {
         this(null);
     }
     
-    public void addNextVertex(Vertex vertex){
-        next.add(vertex);
+    public void setNextVertex(Vertex vertex){
+        next = vertex;
     }
     
     public void setPredVertex(Vertex vertex){
@@ -62,7 +60,7 @@ public class Vertex {
      * @return 
      */
     public Element getElement(){
-        return null;
+        return next.getElement();
     }
     
 }

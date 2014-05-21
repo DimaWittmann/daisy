@@ -7,6 +7,7 @@
 package daisy.static_architecture.elements.views;
 
 import daisy.static_architecture.elements.ProcessorUnit;
+import java.awt.Point;
 
 /**
  *
@@ -23,7 +24,9 @@ public class ProcessorUnitView extends ElementView {
     public ProcessorUnitView(ProcessorUnit PU) {
         super(PU);
         processorUnit = PU;
+        initElementVertexes();
         initComponents();
+        this.setSize(this.preferredSize());
     }
 
     public void setStatus(String stat){
@@ -43,6 +46,11 @@ public class ProcessorUnitView extends ElementView {
         progress.setValue(s);
     }
  
+    @Override
+    protected void initElementVertexes() {
+        addPin(new Point(5, 60));
+        addPin(new Point(240, 60));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

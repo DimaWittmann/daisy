@@ -4,9 +4,7 @@ import daisy.static_architecture.DataToken;
 import daisy.static_architecture.Instruction;
 import daisy.static_architecture.elements.Element;
 import daisy.static_architecture.elements.MatchingUnit;
-import daisy.static_architecture.elements.connection.ElementVertex;
 import daisy.static_architecture.elements.views.MatchingUnitView;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class StaticMatchingUnit extends MatchingUnit {
     private MatchingUnitView view;
 
     private StaticFatchingUnit fatchingUnit;
-    private StaticCommutator commutator;
+    private StaticPUtoMCommutator commutator;
 
     public StaticMatchingUnit() {
         this(32);
@@ -28,22 +26,21 @@ public class StaticMatchingUnit extends MatchingUnit {
 
     public StaticMatchingUnit(int size) {
         instructions = new Instruction[size];
-        
-        ElementVertex vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(5, 100));
-        getView().add(vertex.getView());
-        daisy.Daisy.design.addVertex(vertex);
-        
-        vertex = new ElementVertex(this);
-        vertex.getView().setLocation(new Point(240, 100));
-        getView().add(vertex.getView());
-        daisy.Daisy.design.addVertex(vertex);
     }
 
     @Override
     public void loadProgram(Instruction[] program) {
-        System.arraycopy(program, 0, instructions, 0, (instructions.length > program.length) ? program.length : instructions.length);
+        for (Instruction instruction : program) {
+            addIntruction(instruction);
+        }
         this.fireTableDataChanged();
+    }
+    
+    @Override
+    public void addIntruction(Instruction instruction) {
+        if(instruction.id < instructions.length){
+            instructions[instruction.id] = instruction;
+        }
     }
 
     @Override
@@ -59,9 +56,9 @@ public class StaticMatchingUnit extends MatchingUnit {
             }
         }
 
-        if (element instanceof StaticCommutator) {
+        if (element instanceof StaticPUtoMCommutator) {
             if(element != commutator){
-                commutator = (StaticCommutator) element;
+                commutator = (StaticPUtoMCommutator) element;
                 element.attachElement(this);
             }
         }
@@ -90,7 +87,6 @@ public class StaticMatchingUnit extends MatchingUnit {
     public MatchingUnitView getView() {
         if (view == null) {
             view = new MatchingUnitView(this);
-            view.setSize(view.preferredSize());
         }
         return view;
     }
@@ -224,5 +220,7 @@ public class StaticMatchingUnit extends MatchingUnit {
         fatchingUnit = null;
         commutator = null;
     }
+
+
 
 }

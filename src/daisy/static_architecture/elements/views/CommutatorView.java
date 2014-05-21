@@ -7,8 +7,9 @@
 package daisy.static_architecture.elements.views;
 
 
-import daisy.static_architecture.elements.Commutator;
-import daisy.static_architecture.elements.connection.ElementVertex;
+import daisy.static_architecture.elements.Element;
+import daisy.static_architecture.elements.implementation.StaticPUtoMCommutator;
+import daisy.static_architecture.elements.implementation.StaticFtoPUCommutator;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,36 +26,56 @@ public class CommutatorView extends ElementView implements ActionElement{
      * Creates new form CommutatorView
      * @param commutator
      */
-    public CommutatorView(Commutator commutator) {
+    public CommutatorView(Element commutator) {
         super(commutator);
-        setLayout(null);
+        initElementVertexes();
         initComponents();
+        this.setSize(this.preferredSize());
     }
     
     
-    private void initElementVertexes(){
-        ElementVertex vertex = new ElementVertex(this.element);
-        vertex.getView().setLocation(new Point(5, 100));
-        this.add(vertex.getView());
+    @Override
+    protected void initElementVertexes(){   
+        
+        addPin(new Point(5, 40));
+        addPin(new Point(5, 80));
+        addPin(new Point(5, 120));
+        addPin(new Point(5, 160));
 
-        daisy.Daisy.design.addVertex(vertex);
+        if(element instanceof StaticPUtoMCommutator){
+            addPin(new Point(65, 100));
+        }
+        
+        if(element instanceof StaticFtoPUCommutator){
+            addPin(new Point(65, 40));
+            addPin(new Point(65, 80));
+            addPin(new Point(65, 120));
+            addPin(new Point(65, 160));
+        }
 
-        vertex = new ElementVertex(this.element);
-        vertex.getView().setLocation(new Point(65, 100));
-        this.add(vertex.getView());
-
-        daisy.Daisy.design.addVertex(vertex);
+        
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        int xPoints[] = {5, 70, 70, 5, 5};
-        int yPoints[] = {25, 5, 195, 175, 25};
-        Path2D path = new Path2D.Double(new Polygon(xPoints, yPoints, 4));
-        path = (Path2D) new BasicStroke(2).createStrokedShape(path);
         
-        ((Graphics2D) g).fill(path);
+        super.paintComponent(g);
+        if(element instanceof StaticPUtoMCommutator){
+            int xPoints[] = {5, 70, 70, 5, 5};
+            int yPoints[] = {5, 25, 175, 195, 5};
+            Path2D path = new Path2D.Double(new Polygon(xPoints, yPoints, 4));
+            path = (Path2D) new BasicStroke(2).createStrokedShape(path);
+
+            ((Graphics2D) g).fill(path);
+        }
+        if(element instanceof StaticFtoPUCommutator){
+            int xPoints[] = {5, 70, 70, 5, 5};
+            int yPoints[] = {5, 5, 195, 195, 5};
+            Path2D path = new Path2D.Double(new Polygon(xPoints, yPoints, 4));
+            path = (Path2D) new BasicStroke(2).createStrokedShape(path);
+
+            ((Graphics2D) g).fill(path);
+        }
         
         
     }

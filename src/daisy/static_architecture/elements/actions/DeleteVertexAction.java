@@ -18,7 +18,7 @@ public class DeleteVertexAction implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        daisy.Daisy.design.removeVertex(source);
-        daisy.Daisy.design.repaintDesign();
+        daisy.Daisy.getDesign().removeVertex(source);
+        daisy.Daisy.getDesign().repaintDesign();
     }
 }
